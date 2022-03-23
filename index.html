@@ -28,22 +28,22 @@
                 <div class="formComment">
                     <div class="mb-3">
                         <label for="inputName" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="inputName">
+                        <input v-model="name" type="text" class="form-control" id="inputName">
                     </div>
                     <div class="mb-3">
                         <label for="inputComment" class="form-label">Comment</label>
-                        <textarea class="form-control" id="inputComment"></textarea>
+                        <textarea v-model="message" class="form-control" id="inputComment"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button v-on:click="addComment"type="submit" class="btn btn-primary">Submit</button>
                 </div>
                 <hr />
                 <div class="comments">
-                    <div class="card">
+                    <div class="card" v-for="comment in comments">
                         <div class="card-body">
                             <span class="commentAuthor">Autor:
-                                <strong>Álvaro</strong>
+                                <strong>{{comment.name}}</strong>
                             </span>
-                            <p>Comentário teste</p>
+                            <p>{{comment.message}}</p>
                             <div>
                                 <a href="#" title="Exbluir"> Excluir </a>
                             </div>
@@ -54,12 +54,20 @@
             `,
             data() {
                 return {
-                    comments: [
-                        {
-                            name: 'Álvaro',
-                            message: 'Lorem ipsum'
-                        }
-                    ]
+                    comments: [],
+                    name: '',
+                    message: ''
+                }
+            },
+            methods: {
+                addComment() {
+                    this.comments.push({
+                        name: this.name,
+                        message: this.message
+                    })
+
+                    this.name = '';
+                    this.message = '';
                 }
             }
         })
