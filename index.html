@@ -38,14 +38,14 @@
                 </div>
                 <hr />
                 <div class="comments">
-                    <div class="card" v-for="comment in comments">
+                    <div class="card" v-for="(comment, index) in comments">
                         <div class="card-body">
                             <span class="commentAuthor">Autor:
                                 <strong>{{comment.name}}</strong>
                             </span>
                             <p>{{comment.message}}</p>
                             <div>
-                                <a href="#" title="Exbluir"> Excluir </a>
+                                <a v-on:click.prevent="removeComment(index)"href="#" title="Exbluir"> Excluir </a>
                             </div>
                         </div>
                     </div>
@@ -61,6 +61,10 @@
             },
             methods: {
                 addComment() {
+                    if (this.message.trim() === '') {
+                        return;
+                    }
+
                     this.comments.push({
                         name: this.name,
                         message: this.message
@@ -68,6 +72,9 @@
 
                     this.name = '';
                     this.message = '';
+                },
+                removeComment(index) {
+                    this.comments.splice(index, 1);
                 }
             }
         })
