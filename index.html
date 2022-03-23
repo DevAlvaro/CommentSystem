@@ -38,7 +38,7 @@
                 </div>
                 <hr />
                 <div class="comments">
-                    <div class="card" v-for="(comment, index) in comments">
+                    <div class="card" v-for="(comment, index) in allComments">
                         <div class="card-body">
                             <span class="commentAuthor">Autor:
                                 <strong>{{comment.name}}</strong>
@@ -75,6 +75,14 @@
                 },
                 removeComment(index) {
                     this.comments.splice(index, 1);
+                }
+            },
+            computed: {
+                allComments() {
+                    return this.comments.map(comment => ({
+                        ...comment,
+                        name: comment.name.trim() === '' ? 'Anônimo' : comment.name
+                    }))
                 }
             }
         })
